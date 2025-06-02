@@ -6,7 +6,7 @@ function App() {
   const client = new QueryClient();
   return (
     <QueryClientProvider client={client}>
-      <BrowserRouter>
+      <BrowserRouter basename="/Crypto-Trading">
         <AppRoutes />
       </BrowserRouter>
     </QueryClientProvider>
