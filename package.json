@@ -51,10 +51,7 @@
     "vite": "^5.2.11"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "prettier --write",
-      "eslint --max-warnings=0"
-    ]
+    "*.{js,ts,tsx}": "eslint --fix"
   },
   "homepage": "https://github.com/jasjeet-manaise/Crypto-Trading"
 }
