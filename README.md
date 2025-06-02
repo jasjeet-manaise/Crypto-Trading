@@ -5,6 +5,10 @@ This app allows users to browse crypto assets, simulate trades between crypto an
 
 ---
 
+**Live Demo**: [https://jasjeet-manaise.github.io/Crypto-Trading/](https://jasjeet-manaise.github.io/Crypto-Trading/)
+
+---
+
 ## 🚀 Features
 
 - 🔐 Local login system (no backend)
@@ -40,7 +44,7 @@ This app allows users to browse crypto assets, simulate trades between crypto an
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
 - ⚛️ React + TypeScript
 - ⚡ Vite
@@ -84,7 +88,7 @@ Visit `http://localhost:5173` to view the app.
 
 ---
 
-##  Usage
+## Usage
 
 1. **Log In** with any email
 2. On **Home Page**:
@@ -99,7 +103,7 @@ Visit `http://localhost:5173` to view the app.
 
 ---
 
-##  Linting, Formatting, and Git Hooks
+## Linting, Formatting, and Git Hooks
 
 - Prettier + ESLint
 - Husky pre-commit hook
