@@ -1,7 +1,7 @@
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const API_URL = "https://api.coingecko.com/api/v3/coins/markets";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export type MarketAsset = {
   id: string;
