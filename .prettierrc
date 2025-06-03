@@ -15,5 +15,5 @@
   "tabWidth": 2,
   "trailingComma": "es5",
   "useTabs": false,
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^@(.*)$", "^[./]"],
+  "importOrder": ["<THIRD_PARTY_MODULES>", "^@(.*)$", "^[./]"]
 }

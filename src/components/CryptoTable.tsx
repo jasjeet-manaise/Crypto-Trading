@@ -4,16 +4,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useMarketAssets } from "../hooks/useMarketAssets";
 import { Select } from "./ui/Select";
 import { Button } from "./ui/Button";
+import { SortDirection, SortField } from "../enums";
 
-enum SortField {
-  Name = "name",
-  Price = "current_price",
-}
-
-enum SortDirection {
-  Asc = "asc",
-  Desc = "desc",
-}
 
 const SortArrow = ({
   active,
@@ -78,10 +70,10 @@ export default function CryptoTable() {
   }, [assets, sortField, sortDirection]);
 
   return (
-    <div className=" rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+    <div className="rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
       <table className="w-full table-auto text-sm text-left text-gray-800 dark:text-gray-100">
         <thead>
-          <tr className=" sticky top-[68px] bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <tr className="sticky top-[68px] bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
             <th
               className="px-6 py-4 font-semibold tracking-wide uppercase text-xs cursor-pointer select-none"
               onClick={() => onSort(SortField.Name)}
@@ -128,62 +120,68 @@ export default function CryptoTable() {
           </tr>
         </thead>
         <tbody>
-          {isLoading
-            ? Array.from({ length: 10 }).map((_, i) => (
-                <tr
-                  key={i}
-                  className="border-b border-gray-100 dark:border-gray-800"
-                >
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <Skeleton circle width={28} height={28} />
-                      <Skeleton width={100} height={18} />
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <Skeleton width={60} height={18} />
-                  </td>
-                  <td className="px-6 py-4">
-                    <Skeleton width={80} height={18} />
-                  </td>
-                </tr>
-              ))
-            : sorted.map((asset) => (
-                <tr
-                  key={asset.id}
-                  className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
-                >
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={asset.image}
-                        alt={`${asset.name} logo`}
-                        className="w-7 h-7 rounded-full border border-gray-300 dark:border-gray-700 shadow-sm"
-                      />
-                      <span className="font-medium text-sm">{asset.name}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
-                    ${asset.current_price.toLocaleString()}
-                  </td>
-                  <td className="px-6 py-4">
-                    <Select
-                      defaultValue=""
-                      onChange={(e) =>
-                        alert(
-                          `You selected ${e.target.value} for ${asset.name}`
-                        )
-                      }
-                    >
-                      <option value="" disabled>
-                        Buy/Sell
-                      </option>
-                      <option value="buy">Buy</option>
-                      <option value="sell">Sell</option>
-                    </Select>
-                  </td>
-                </tr>
-              ))}
+          {isLoading ? (
+            Array.from({ length: 10 }).map((_, i) => (
+              <tr key={i} className="border-b border-gray-100 dark:border-gray-800">
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <Skeleton circle width={28} height={28} />
+                    <Skeleton width={100} height={18} />
+                  </div>
+                </td>
+                <td className="px-6 py-4">
+                  <Skeleton width={60} height={18} />
+                </td>
+                <td className="px-6 py-4">
+                  <Skeleton width={80} height={18} />
+                </td>
+              </tr>
+            ))
+          ) : sorted.length === 0 ? (
+            <tr>
+              <td
+                colSpan={3}
+                className="px-6 py-10 text-center text-gray-500 dark:text-gray-400"
+              >
+                No data available.
+              </td>
+            </tr>
+          ) : (
+            sorted.map((asset) => (
+              <tr
+                key={asset.id}
+                className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
+              >
+                <td className="px-6 py-4">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={asset.image}
+                      alt={`${asset.name} logo`}
+                      className="w-7 h-7 rounded-full border border-gray-300 dark:border-gray-700 shadow-sm"
+                    />
+                    <span className="font-medium text-sm">{asset.name}</span>
+                  </div>
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
+                  ${asset.current_price.toLocaleString()}
+                </td>
+                <td className="px-6 py-4">
+                  <Select
+                    defaultValue=""
+                    onChange={(e) =>
+                      alert(`You selected ${e.target.value} for ${asset.name}`)
+                    }
+                  >
+                    <option value="" disabled>
+                      Buy/Sell
+                    </option>
+                    <option value="buy">Buy</option>
+                    <option value="sell">Sell</option>
+                  </Select>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
 

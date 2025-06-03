@@ -4,15 +4,9 @@ import { Card } from "./ui/Card";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/Button";
 import { MarketAsset } from "../hooks/useMarketAssets";
+import { SwapMode } from "../enums";
 
-enum SwapMode {
-  CryptoToFiat = "cryptoToFiat",
-  FiatToCrypto = "fiatToCrypto",
-}
-
-export default function TradePageContent(data:{
-  pages: MarketAsset[];
-}) {
+export default function TradePageContent(data: { pages: MarketAsset[] }) {
   const assets = data?.pages.flat() ?? [];
   const [selectedId, setSelectedId] = useState("bitcoin");
   const [swapMode, setSwapMode] = useState<SwapMode>(SwapMode.CryptoToFiat);
@@ -24,8 +18,6 @@ export default function TradePageContent(data:{
     [selectedId, assets]
   );
   const price = selectedAsset?.current_price ?? 0;
-
-  // Check for session expiration and logout if needed
 
   // Update inputs based on swap mode and price
   useEffect(() => {
@@ -130,9 +122,5 @@ export default function TradePageContent(data:{
     </Card>
   );
 
-  return (
-    <div className="max-w-xl mx-auto px-4 mt-10">
-      {TradeCard}
-    </div>
-  );
+  return <div className="max-w-xl mx-auto px-4 mt-10">{TradeCard}</div>;
 }
