@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { encrypt, decrypt } from "../utils/crypto";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -49,12 +50,24 @@ export const useAuth = create<AuthState>()(
       isSessionExpired: () => {
         const user = get().user;
         if (!user) return true;
-        const maxAge = 15 * 60 * 1000; // 15 minutes
+        const maxAge = 15 * 60 * 1000;
         return Date.now() - user.loginTime > maxAge;
       },
     }),
     {
       name: "auth-storage",
+
+      storage: {
+        getItem: (name) => {
+          const stored = localStorage.getItem(name);
+          return stored ? decrypt(stored) : null;
+        },
+        setItem: (name, value) => {
+          const encrypted = encrypt(value);
+          localStorage.setItem(name, encrypted);
+        },
+        removeItem: (name) => localStorage.removeItem(name),
+      },
     }
   )
 );
