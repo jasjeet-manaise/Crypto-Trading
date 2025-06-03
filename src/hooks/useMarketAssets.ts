@@ -35,6 +35,8 @@ export function useMarketAssets(options?: { getAll?: boolean }) {
       isFetchingNextPage: false,
       hasNextPage: false,
       fetchNextPage: () => {},
+      isError: query.isError,
+      error: query.error,
     };
   }
 
@@ -63,5 +65,7 @@ export function useMarketAssets(options?: { getAll?: boolean }) {
     isFetchingNextPage: query.isFetchingNextPage,
     hasNextPage: query.hasNextPage,
     fetchNextPage: query.fetchNextPage,
+    isError: query.isError,
+    error: query.error,
   };
 }
