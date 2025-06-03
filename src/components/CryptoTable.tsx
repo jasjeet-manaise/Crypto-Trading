@@ -78,12 +78,12 @@ export default function CryptoTable() {
   }, [assets, sortField, sortDirection]);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full table-auto border-collapse">
+    <div className="overflow-x-auto rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+      <table className="w-full table-auto text-sm text-left text-gray-800 dark:text-gray-100">
         <thead>
-          <tr className="bg-gray-100">
+          <tr className="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
             <th
-              className="p-2 text-left cursor-pointer select-none"
+              className="px-6 py-4 font-semibold tracking-wide uppercase text-xs cursor-pointer select-none"
               onClick={() => onSort(SortField.Name)}
               role="button"
               aria-sort={
@@ -96,14 +96,14 @@ export default function CryptoTable() {
               tabIndex={0}
               onKeyDown={(e) => handleKeyDown(e, SortField.Name)}
             >
-              Name{" "}
+              Name
               <SortArrow
                 active={sortField === SortField.Name}
                 direction={sortDirection}
               />
             </th>
             <th
-              className="p-2 text-left cursor-pointer select-none"
+              className="px-6 py-4 font-semibold tracking-wide uppercase text-xs cursor-pointer select-none"
               onClick={() => onSort(SortField.Price)}
               role="button"
               aria-sort={
@@ -116,47 +116,59 @@ export default function CryptoTable() {
               tabIndex={0}
               onKeyDown={(e) => handleKeyDown(e, SortField.Price)}
             >
-              Price (USD){" "}
+              Price (USD)
               <SortArrow
                 active={sortField === SortField.Price}
                 direction={sortDirection}
               />
             </th>
-            <th className="p-2 text-left">Buy/Sell</th>
+            <th className="px-6 py-4 font-semibold tracking-wide uppercase text-xs">
+              Buy/Sell
+            </th>
           </tr>
         </thead>
         <tbody>
           {isLoading
             ? Array.from({ length: 10 }).map((_, i) => (
-                <tr key={i} className="border-t">
-                  <td className="p-2 flex gap-2 items-center">
-                    <Skeleton circle width={24} height={24} />
-                    <Skeleton width={120} />
+                <tr
+                  key={i}
+                  className="border-b border-gray-100 dark:border-gray-800"
+                >
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <Skeleton circle width={28} height={28} />
+                      <Skeleton width={100} height={18} />
+                    </div>
                   </td>
-                  <td className="p-2">
-                    <Skeleton width={80} />
+                  <td className="px-6 py-4">
+                    <Skeleton width={60} height={18} />
                   </td>
-                  <td className="p-2">
-                    <Skeleton width={100} />
+                  <td className="px-6 py-4">
+                    <Skeleton width={80} height={18} />
                   </td>
                 </tr>
               ))
             : sorted.map((asset) => (
-                <tr key={asset.id} className="border-t hover:bg-gray-50">
-                  <td className="p-2 flex gap-2 items-center">
-                    <img
-                      src={asset.image}
-                      alt={`${asset.name} logo`}
-                      className="w-6 h-6"
-                    />
-                    {asset.name}
+                <tr
+                  key={asset.id}
+                  className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
+                >
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={asset.image}
+                        alt={`${asset.name} logo`}
+                        className="w-7 h-7 rounded-full border border-gray-300 dark:border-gray-700 shadow-sm"
+                      />
+                      <span className="font-medium text-sm">{asset.name}</span>
+                    </div>
                   </td>
-                  <td className="p-2">
+                  <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
                     ${asset.current_price.toLocaleString()}
                   </td>
-                  <td className="p-2">
+                  <td className="px-6 py-4">
                     <Select
-                      className="border rounded px-2 py-1"
+                      className="w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-1.5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                       defaultValue=""
                       onChange={(e) =>
                         alert(
@@ -177,11 +189,11 @@ export default function CryptoTable() {
       </table>
 
       {hasNextPage && (
-        <div className="flex justify-center">
+        <div className="flex justify-center py-6">
           <Button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition"
           >
             {isFetchingNextPage ? "Loading..." : "Show More"}
           </Button>

@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { useAuth } from "../store/authStore";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/Button";
+import { Loader } from "./ui/Loader"; // Make sure this exists
 
 interface Props {
   onClose: () => void;
@@ -13,6 +14,7 @@ export default function LoginModal({ onClose }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -20,15 +22,21 @@ export default function LoginModal({ onClose }: Props) {
     return () => setMounted(false);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = login(email, password);
+    setLoading(true);
+    setError("");
+
+    const result = await login(email, password);
+
     if (!result.success) {
       setError(result.error || "Login failed");
+      setLoading(false);
       return;
     }
 
     setError("");
+    setLoading(false);
     onClose();
   };
 
@@ -44,6 +52,7 @@ export default function LoginModal({ onClose }: Props) {
             required
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 border rounded"
+            disabled={loading}
           />
           <Input
             type="password"
@@ -52,23 +61,33 @@ export default function LoginModal({ onClose }: Props) {
             required
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 border rounded"
+            disabled={loading}
           />
           {error && (
             <div className="text-red-600 text-sm font-medium">{error}</div>
           )}
+
+          {loading && (
+            <div className="flex justify-center">
+              <Loader />
+            </div>
+          )}
+
           <div className="flex justify-end gap-2">
             <Button
               type="button"
               onClick={onClose}
               className="px-4 py-2 bg-gray-300 rounded"
+              disabled={loading}
             >
               Cancel
             </Button>
             <Button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded"
+              disabled={loading}
             >
-              Log In
+              {loading ? "Logging in..." : "Log In"}
             </Button>
           </div>
         </form>
