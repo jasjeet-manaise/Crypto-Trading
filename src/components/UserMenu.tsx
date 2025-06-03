@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import { useAuth } from "../store/authStore";
-import { Button } from "./ui/Button";
+
 import { LogOut, Mail } from "lucide-react";
 import clsx from "clsx";
+import { useAuth } from "../store";
+import { Button } from "./ui";
 
 export default function UserMenu() {
   const { user, logout } = useAuth();

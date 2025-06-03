@@ -1,11 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
-import { useMarketAssets } from "../hooks/useMarketAssets";
-import { useAuth } from "../store/authStore";
-import { Input } from "../components/ui/Input";
-import { Select } from "../components/ui/Select";
-import { Button } from "../components/ui/Button";
-import { Card } from "../components/ui/Card";
-import { Loader } from "../components/ui/Loader";
+import { useMarketAssets } from "../hooks";
+import { useAuth } from "../store";
+import { Select, Card, Input, Button, Loader } from "./ui";
 
 enum SwapMode {
   CryptoToFiat = "cryptoToFiat",

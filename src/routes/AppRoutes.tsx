@@ -1,8 +1,7 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import Home from "../pages/Home";
-import Trade from "../pages/Trade";
-import Layout from "../components/Layout";
+import { Home, Trade } from "../pages";
 import ProtectedRoute from "./ProtectedRoutes";
+import { Layout } from "../components";
 
 export default function AppRoutes() {
   return (

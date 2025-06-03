@@ -1,9 +1,8 @@
 import { useMemo, useState, KeyboardEvent } from "react";
-import { useMarketAssets } from "../hooks/useMarketAssets";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Select } from "./ui/Select";
-import { Button } from "./ui/Button";
+import { useMarketAssets } from "../hooks";
+import { Select, Button } from "./ui";
 
 enum SortField {
   Name = "name",
