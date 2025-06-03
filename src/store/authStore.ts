@@ -21,7 +21,7 @@ interface AuthState {
   login: (
     email: string,
     password: string
-  ) => { success: boolean; error?: string };
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   isSessionExpired: () => boolean;
 }
@@ -30,24 +30,31 @@ export const useAuth = create<AuthState>()(
   persist(
     (set, get) => ({
       user: null,
-      login: (email, password) => {
+
+      login: async (email, password) => {
         const result = loginSchema.safeParse({ email, password });
         if (!result.success) {
           const firstError = result.error.issues[0]?.message;
           return { success: false, error: firstError };
         }
 
+        await new Promise((res) => setTimeout(res, 800));
+
         set({ user: { email, loginTime: Date.now() } });
         return { success: true };
       },
+
       logout: () => set({ user: null }),
+
       isSessionExpired: () => {
         const user = get().user;
         if (!user) return true;
-        const maxAge = 15 * 60 * 1000; // 15 mins
+        const maxAge = 15 * 60 * 1000; // 15 minutes
         return Date.now() - user.loginTime > maxAge;
       },
     }),
-    { name: "auth-storage" }
+    {
+      name: "auth-storage",
+    }
   )
 );

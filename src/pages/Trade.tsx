@@ -42,11 +42,11 @@ export default function Trade() {
     if (!price) return;
 
     if (swapMode === SwapMode.CryptoToFiat) {
-      const c = parseFloat(cryptoInput);
-      setFiatInput(!isNaN(c) ? (c * price).toFixed(2) : "");
+      const crypto = parseFloat(cryptoInput);
+      setFiatInput(!isNaN(crypto) ? (crypto * price).toFixed(2) : "");
     } else {
-      const f = parseFloat(fiatInput);
-      setCryptoInput(!isNaN(f) ? (f / price).toFixed(6) : "");
+      const fiat = parseFloat(fiatInput);
+      setCryptoInput(!isNaN(fiat) ? (fiat / price).toFixed(6) : "");
     }
   }, [cryptoInput, fiatInput, price, swapMode]);
 
@@ -64,9 +64,9 @@ export default function Trade() {
       onChange={(e) => setSelectedId(e.target.value)}
       className="min-w-[120px]"
     >
-      {assets.map((a) => (
-        <option key={a.id} value={a.id}>
-          {a.name}
+      {assets.map((asset) => (
+        <option key={asset.id} value={asset.id}>
+          {asset.name}
         </option>
       ))}
     </Select>
@@ -85,18 +85,23 @@ export default function Trade() {
             value={cryptoInput}
             onChange={(e) => setCryptoInput(e.target.value)}
             placeholder="Crypto Amount"
-            className="flex-1"
+            className="flex-1 "
           />
           {AssetSelect}
         </div>
       ) : (
-        <Input
-          type="number"
-          value={fiatInput}
-          onChange={(e) => setFiatInput(e.target.value)}
-          placeholder="USD Amount"
-          className="w-full"
-        />
+        <div className="relative w-full">
+          <Input
+            type="number"
+            value={fiatInput}
+            onChange={(e) => setFiatInput(e.target.value)}
+            placeholder="USD Amount"
+            className="w-full pr-12"
+          />
+          <span className="absolute right-6 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+            USD
+          </span>
+        </div>
       )}
 
       <div className="text-center">
@@ -127,13 +132,18 @@ export default function Trade() {
           {AssetSelect}
         </div>
       ) : (
-        <Input
-          type="number"
-          value={fiatInput}
-          readOnly
-          placeholder="USD Amount"
-          className="w-full bg-gray-100 dark:bg-gray-700"
-        />
+        <div className="relative w-full">
+          <Input
+            type="number"
+            value={fiatInput}
+            readOnly
+            placeholder="USD Amount"
+            className="w-full pr-12 bg-gray-100 dark:bg-gray-700"
+          />
+          <span className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
+            USD
+          </span>
+        </div>
       )}
     </Card>
   );
