@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { useAuth } from "../store/authStore";
-import { Input } from "./ui/Input";
-import { Button } from "./ui/Button";
-import { Loader } from "./ui/Loader"; // Make sure this exists
+import { useAuth } from "../store";
+import { Input, Button, Loader } from "./ui";
 
 interface Props {
   onClose: () => void;

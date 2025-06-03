@@ -1,4 +1,4 @@
-import TradePage from "../components/TradePage";
+import { TradePage } from "../components";
 
 export default function Trade() {
   return <TradePage />;

@@ -1,8 +1,8 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../store/authStore";
 import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../store";
 import LoginModal from "./LoginModal";
-import { Button } from "./ui/Button";
+import { Button } from "./ui";
 import UserMenu from "./UserMenu";
 
 export default function Header() {

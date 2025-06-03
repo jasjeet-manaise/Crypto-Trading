@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../store/authStore";
+import { useAuth } from "../store";
 
 export default function ProtectedRoute({
   children,
