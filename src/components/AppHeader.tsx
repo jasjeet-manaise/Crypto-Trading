@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../store";
 import LoginModal from "./LoginModal";
-import { Button } from "./ui";
 import UserMenu from "./UserMenu";
+import { useAuthBackUrl } from "../hooks/useAuthBackUrl";
+import { useAuth } from "../store/authStore";
+import { Button } from "./ui/Button";
 
-export default function Header() {
+export default function AppHeader() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const user = useAuth((s) => s.user);
   const [showModal, setShowModal] = useState(false);
-
+  const { handleAuthBackUrlSet } = useAuthBackUrl();
   return (
     <>
       <header className="sticky top-0 z-10 bg-white border-b shadow-sm px-6 py-4 flex justify-between items-center">
@@ -27,7 +28,8 @@ export default function Header() {
           <button
             onClick={() => {
               if (!user) {
-                alert("Please log in to access the Trade page.");
+                handleAuthBackUrlSet("/trade");
+                setShowModal(true);
                 return;
               }
               navigate("/trade");

@@ -1,15 +1,13 @@
 import CryptoJS from "crypto-js";
 
-const SECRET_KEY = "CRYPTO_TRADING_SECRET";
-
-export function encrypt(data: object): string {
+export function encrypt(data: object, key: string): string {
   const stringified = JSON.stringify(data);
-  return CryptoJS.AES.encrypt(stringified, SECRET_KEY).toString();
+  return CryptoJS.AES.encrypt(stringified, key).toString();
 }
 
-export function decrypt(cipher: string): any {
+export function decrypt(cipher: string, key: string): any {
   try {
-    const bytes = CryptoJS.AES.decrypt(cipher, SECRET_KEY);
+    const bytes = CryptoJS.AES.decrypt(cipher, key);
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
     if (!decrypted) throw new Error("Invalid decryption result");
     return JSON.parse(decrypted);

@@ -1,12 +1,14 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import { Home, Trade } from "../pages";
-import ProtectedRoute from "./ProtectedRoutes";
-import { Layout } from "../components";
+
+import ProtectedRoute from "../components/ProtectedRoute";
+import AppLayout from "../components/AppLayout";
+import Home from "../pages/Home";
+import Trade from "../pages/Trade";
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route element={<Layout />}>
+      <Route element={<AppLayout />}>
         <Route path="/" element={<Home />} />
         <Route
           path="/trade"
