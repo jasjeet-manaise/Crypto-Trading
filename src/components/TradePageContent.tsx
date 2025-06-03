@@ -1,18 +1,19 @@
 import { useState, useEffect, useMemo } from "react";
-import { useMarketAssets } from "../hooks";
-import { useAuth } from "../store";
-import { Select, Card, Input, Button, Loader } from "./ui";
+import { Select } from "./ui/Select";
+import { Card } from "./ui/Card";
+import { Input } from "./ui/Input";
+import { Button } from "./ui/Button";
+import { MarketAsset } from "../hooks/useMarketAssets";
 
 enum SwapMode {
   CryptoToFiat = "cryptoToFiat",
   FiatToCrypto = "fiatToCrypto",
 }
 
-export default function TradePage() {
-  const { user } = useAuth();
-  const { data, isLoading } = useMarketAssets({ getAll: true });
+export default function TradePageContent(data:{
+  pages: MarketAsset[];
+}) {
   const assets = data?.pages.flat() ?? [];
-
   const [selectedId, setSelectedId] = useState("bitcoin");
   const [swapMode, setSwapMode] = useState<SwapMode>(SwapMode.CryptoToFiat);
   const [cryptoInput, setCryptoInput] = useState("");
@@ -25,13 +26,6 @@ export default function TradePage() {
   const price = selectedAsset?.current_price ?? 0;
 
   // Check for session expiration and logout if needed
-  useEffect(() => {
-    const { isSessionExpired, logout } = useAuth.getState();
-    if (isSessionExpired()) {
-      logout();
-      alert("Please log in again.");
-    }
-  }, []);
 
   // Update inputs based on swap mode and price
   useEffect(() => {
@@ -45,14 +39,6 @@ export default function TradePage() {
       setCryptoInput(!isNaN(fiat) ? (fiat / price).toFixed(6) : "");
     }
   }, [cryptoInput, fiatInput, price, swapMode]);
-
-  if (!user) {
-    return (
-      <p className="text-red-600 text-center mt-10">
-        Please log in to access the Trade page.
-      </p>
-    );
-  }
 
   const AssetSelect = (
     <Select
@@ -146,7 +132,7 @@ export default function TradePage() {
 
   return (
     <div className="max-w-xl mx-auto px-4 mt-10">
-      {isLoading ? <Loader /> : TradeCard}
+      {TradeCard}
     </div>
   );
 }

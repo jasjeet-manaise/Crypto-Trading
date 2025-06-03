@@ -1,8 +1,9 @@
 import { useMemo, useState, KeyboardEvent } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useMarketAssets } from "../hooks";
-import { Select, Button } from "./ui";
+import { useMarketAssets } from "../hooks/useMarketAssets";
+import { Select } from "./ui/Select";
+import { Button } from "./ui/Button";
 
 enum SortField {
   Name = "name",
@@ -77,10 +78,10 @@ export default function CryptoTable() {
   }, [assets, sortField, sortDirection]);
 
   return (
-    <div className="overflow-x-auto rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+    <div className=" rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
       <table className="w-full table-auto text-sm text-left text-gray-800 dark:text-gray-100">
         <thead>
-          <tr className="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <tr className=" sticky top-[68px] bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
             <th
               className="px-6 py-4 font-semibold tracking-wide uppercase text-xs cursor-pointer select-none"
               onClick={() => onSort(SortField.Name)}
@@ -167,7 +168,6 @@ export default function CryptoTable() {
                   </td>
                   <td className="px-6 py-4">
                     <Select
-                      className="w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-1.5 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                       defaultValue=""
                       onChange={(e) =>
                         alert(
