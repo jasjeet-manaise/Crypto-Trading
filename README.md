@@ -9,7 +9,7 @@ This app allows users to browse crypto assets, simulate trades between crypto an
 
 ---
 
-## 🚀 Features
+##  Features
 
 - 🔐 Local login system (no backend)
 - 🧭 Protected Trade route (login required)
@@ -22,7 +22,7 @@ This app allows users to browse crypto assets, simulate trades between crypto an
 
 ---
 
-## 📌 Assumptions & Trade-offs
+##  Assumptions & Trade-offs
 
 ### Assumptions:
 
@@ -113,4 +113,4 @@ Visit `http://localhost:5173` to view the app.
 
 ## 📄 License
 
-MIT License © 2025 [Your Name]
+MIT License © 2025 Jasjeet Singh Manaise
