@@ -1,10 +1,10 @@
 import { useMemo, useState, KeyboardEvent } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useMarketAssets } from "../hooks/useMarketAssets";
+import { useMarketAssets } from "@/hooks/useMarketAssets";
 import { Select } from "./ui/Select";
 import { Button } from "./ui/Button";
-import { SortDirection, SortField } from "../enums";
+import { SortDirection, SortField } from "@/enums";
 
 
 const SortArrow = ({

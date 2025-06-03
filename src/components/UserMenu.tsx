@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 
 import { LogOut, Mail } from "lucide-react";
 import clsx from "clsx";
-import { useAuth } from "../store/authStore";
+import { useAuth } from "@/store/authStore";
 import { Button } from "./ui/Button";
 
 

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { z } from "zod";
-import { decrypt, encrypt } from "../utils/crypto";
+import { decrypt, encrypt } from "@/utils/crypto";
 
 const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
 
