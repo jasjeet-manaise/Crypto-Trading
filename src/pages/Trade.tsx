@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useMarketAssets } from "../hooks/useMarketAssets";
-import { useAuth } from "../store/authStore";
-import TradePageContent from "../components/TradePageContent";
-import { Loader } from "../components/ui/Loader";
+import { useMarketAssets } from "@/hooks/useMarketAssets";
+import { useAuth } from "@/store/authStore";
+import TradePageContent from "@/components/TradePageContent";
+import { Loader } from "@/components/ui/Loader";
 
 export default function Trade() {
   const { data, isLoading } = useMarketAssets({ getAll: true });

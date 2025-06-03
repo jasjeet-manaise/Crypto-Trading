@@ -3,8 +3,8 @@ import { Select } from "./ui/Select";
 import { Card } from "./ui/Card";
 import { Input } from "./ui/Input";
 import { Button } from "./ui/Button";
-import { MarketAsset } from "../hooks/useMarketAssets";
-import { SwapMode } from "../enums";
+import { MarketAsset } from "@/hooks/useMarketAssets";
+import { SwapMode } from "@/enums";
 
 export default function TradePageContent(data: { pages: MarketAsset[] }) {
   const assets = data?.pages.flat() ?? [];

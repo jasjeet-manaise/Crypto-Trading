@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import UserMenu from "./UserMenu";
-import { useAuthBackUrl } from "../hooks/useAuthBackUrl";
-import { useAuth } from "../store/authStore";
+import { useAuthBackUrl } from "@/hooks/useAuthBackUrl";
+import { useAuth } from "@/store/authStore";
 import { Button } from "./ui/Button";
 
 export default function AppHeader() {

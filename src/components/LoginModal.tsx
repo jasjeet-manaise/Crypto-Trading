@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { useAuth } from "../store/authStore";
+import { useAuth } from "@/store/authStore";
 import { Input } from "./ui/Input";
 import { Loader } from "./ui/Loader";
 import { Button } from "./ui/Button";
