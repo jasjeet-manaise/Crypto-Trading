@@ -1,26 +1,40 @@
-import { useMemo, useState, KeyboardEvent } from 'react';
+import { KeyboardEvent } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { SortDirection, SortField } from '@/enums';
-import { useMarketAssets } from '@/hooks/useMarketAssets';
 import { Button } from './ui/Button';
 import { Select } from './ui/Select';
 
 const SortArrow = ({ active, direction }: { active: boolean; direction: SortDirection }) =>
   active ? <span className="ml-1 inline-block">{direction === 'asc' ? '▲' : '▼'}</span> : null;
 
-export default function CryptoTable() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useMarketAssets();
+type Props = {
+  assets: any[];
+  isLoading: boolean;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  fetchNextPage: () => void;
+  sortField: SortField;
+  sortDirection: SortDirection;
+  setSortField: (field: SortField) => void;
+  setSortDirection: (dir: SortDirection) => void;
+};
 
-  const assets = data?.pages.flat() ?? [];
-
-  const [sortField, setSortField] = useState<SortField>(SortField.Name);
-  const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Asc);
-
+export default function CryptoTable({
+  assets,
+  isLoading,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
+  sortField,
+  sortDirection,
+  setSortField,
+  setSortDirection,
+}: Props) {
   const onSort = (field: SortField) => {
     if (sortField === field) {
-      setSortDirection(prev =>
-        prev === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc
+      setSortDirection(
+        sortDirection === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc
       );
     } else {
       setSortField(field);
@@ -34,21 +48,6 @@ export default function CryptoTable() {
       onSort(field);
     }
   };
-
-  const sorted = useMemo(() => {
-    const sortedAssets = [...assets];
-    sortedAssets.sort((a, b) => {
-      const aVal =
-        sortField === SortField.Price ? Number(a[sortField]) : String(a[sortField]).toLowerCase();
-      const bVal =
-        sortField === SortField.Price ? Number(b[sortField]) : String(b[sortField]).toLowerCase();
-
-      if (aVal < bVal) return sortDirection === SortDirection.Asc ? -1 : 1;
-      if (aVal > bVal) return sortDirection === SortDirection.Asc ? 1 : -1;
-      return 0;
-    });
-    return sortedAssets;
-  }, [assets, sortField, sortDirection]);
 
   return (
     <div className="rounded-2xl border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900">
@@ -108,14 +107,14 @@ export default function CryptoTable() {
                 </td>
               </tr>
             ))
-          ) : sorted.length === 0 ? (
+          ) : assets.length === 0 ? (
             <tr>
               <td colSpan={3} className="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
                 No data available.
               </td>
             </tr>
           ) : (
-            sorted.map(asset => (
+            assets.map(asset => (
               <tr
                 key={asset.id}
                 className="group border-b border-gray-100 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800">
