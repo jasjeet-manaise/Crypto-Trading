@@ -1,94 +1,101 @@
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
-import { useAuth } from "@/store/authStore";
-import { Input } from "./ui/Input";
-import { Loader } from "./ui/Loader";
-import { Button } from "./ui/Button";
-
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { useAuth } from '@/store/authStore';
+import { Button } from './ui/Button';
+import { Input } from './ui/Input';
+import { Loader } from './ui/Loader';
 
 interface Props {
   onClose: () => void;
 }
 
+interface FormState {
+  email: string;
+  password: string;
+  error: string;
+  loading: boolean;
+}
+
 export default function LoginModal({ onClose }: Props) {
-  const login = useAuth((s) => s.login);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const login = useAuth(s => s.login);
   const [mounted, setMounted] = useState(false);
 
+  const [formState, setFormState] = useState<FormState>({
+    email: '',
+    password: '',
+    error: '',
+    loading: false,
+  });
+
+  // to set the mounted state of the Modal
   useEffect(() => {
     setMounted(true);
     return () => setMounted(false);
   }, []);
 
+  const handleChange = (field: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormState(prev => ({ ...prev, [field]: e.target.value }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
+    setFormState(prev => ({ ...prev, loading: true, error: '' }));
 
-    const result = await login(email, password);
+    const result = await login(formState.email, formState.password);
 
     if (!result.success) {
-      setError(result.error || "Login failed");
-      setLoading(false);
+      setFormState(prev => ({ ...prev, error: result.error || 'Login failed', loading: false }));
       return;
     }
 
-    setError("");
-    setLoading(false);
+    setFormState(prev => ({ ...prev, error: '', loading: false }));
     onClose();
   };
 
   const modalContent = (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Log In</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+        <h2 className="mb-4 text-xl font-bold">Log In</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             type="email"
             placeholder="Email"
-            value={email}
+            value={formState.email}
             required
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border rounded"
-            disabled={loading}
+            onChange={handleChange('email')}
+            className="w-full rounded border p-2"
+            disabled={formState.loading}
           />
           <Input
             type="password"
             placeholder="Password"
-            value={password}
+            value={formState.password}
             required
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border rounded"
-            disabled={loading}
+            onChange={handleChange('password')}
+            className="w-full rounded border p-2"
+            disabled={formState.loading}
           />
-          {error && (
-            <div className="text-red-600 text-sm font-medium">{error}</div>
+          {formState.error && (
+            <div className="text-sm font-medium text-red-600">{formState.error}</div>
           )}
-
-          {loading && (
+          {formState.loading && (
             <div className="flex justify-center">
               <Loader />
             </div>
           )}
-
           <div className="flex justify-end gap-2">
             <Button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-300 rounded"
-              disabled={loading}
-            >
+              className="rounded bg-gray-300 px-4 py-2"
+              disabled={formState.loading}>
               Cancel
             </Button>
             <Button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-              disabled={loading}
-            >
-              {loading ? "Logging in..." : "Log In"}
+              className="rounded bg-blue-600 px-4 py-2 text-white"
+              disabled={formState.loading}>
+              {formState.loading ? 'Logging in...' : 'Log In'}
             </Button>
           </div>
         </form>
@@ -97,5 +104,5 @@ export default function LoginModal({ onClose }: Props) {
   );
 
   if (!mounted) return null;
-  return createPortal(modalContent, document.getElementById("modal-root")!);
+  return createPortal(modalContent, document.getElementById('modal-root')!);
 }

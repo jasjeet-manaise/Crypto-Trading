@@ -1,14 +1,12 @@
-import { lazy, Suspense } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
-
-import ProtectedRoute from "@/components/ProtectedRoute";
-import AppLayout from "@/components/AppLayout";
-import { Loader } from "@/components/ui/Loader";
+import { lazy, Suspense } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import AppLayout from '@/components/AppLayout';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import { Loader } from '@/components/ui/Loader';
 
 // Lazy load pages
-const Home = lazy(() => import("@/pages/Home"));
-const Trade = lazy(() => import("@/pages/Trade"));
-
+const Home = lazy(() => import('@/pages/Home'));
+const Trade = lazy(() => import('@/pages/Trade'));
 
 export default function AppRoutes() {
   return (

@@ -1,27 +1,25 @@
-import { BrowserRouter } from "react-router-dom";
-import AppRoutes from "./routes/AppRoutes";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { toast, Toaster } from "sonner";
-import axios from "axios";
-import { useQueryErrorHandling } from "./hooks/useQueryErrorHandling";
+import axios from 'axios';
+import { BrowserRouter } from 'react-router-dom';
+import { toast, Toaster } from 'sonner';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useQueryErrorHandling } from './hooks/useQueryErrorHandling';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
   const client = new QueryClient({
     defaultOptions: {
       mutations: {
         onError: (error: unknown) => {
-          let errorMessage =
-            "An unexpected error occurred during an operation.";
+          let errorMessage = 'An unexpected error occurred during an operation.';
 
           if (axios.isAxiosError(error)) {
-            const axiosError = error as import("axios").AxiosError;
+            const axiosError = error as import('axios').AxiosError;
             if (axiosError.response) {
               errorMessage =
                 (axiosError.response.data as { message?: string })?.message ||
                 `Server Error: ${axiosError.response.status}`;
             } else if (axiosError.request) {
-              errorMessage =
-                "Network Error: Please check your internet connection.";
+              errorMessage = 'Network Error: Please check your internet connection.';
             } else {
               errorMessage = `Request Error: ${axiosError.message}`;
             }
@@ -30,7 +28,7 @@ function App() {
           }
 
           toast.error(errorMessage);
-          console.error("Global Mutation Error:", error);
+          console.error('Global Mutation Error:', error);
         },
       },
     },

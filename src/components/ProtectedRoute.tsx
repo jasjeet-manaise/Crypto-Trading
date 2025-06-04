@@ -1,11 +1,7 @@
-import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/store/authStore";
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '@/store/authStore';
 
-export default function ProtectedRoute({
-  children,
-}: {
-  children: JSX.Element;
-}) {
+export default function ProtectedRoute({ children }: { children: JSX.Element }) {
   const { user } = useAuth();
   const location = useLocation();
 

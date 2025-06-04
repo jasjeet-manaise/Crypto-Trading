@@ -1,13 +1,13 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { z } from "zod";
-import { decrypt, encrypt } from "@/utils/crypto";
+import { z } from 'zod';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { decrypt, encrypt } from '@/utils/crypto';
 
 const ENCRYPTION_KEY = import.meta.env.VITE_ENCRYPTION_KEY;
 
 const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  password: z.string().min(8, 'Password must be at least 8 characters long'),
   // TODO: Enable for user creation
   // .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
   // .regex(/[a-z]/, "Password must contain at least one lowercase letter")
@@ -20,10 +20,7 @@ const loginSchema = z.object({
 
 interface AuthState {
   user: { email: string; loginTime: number } | null;
-  login: (
-    email: string,
-    password: string
-  ) => Promise<{ success: boolean; error?: string }>;
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   isSessionExpired: () => boolean;
 }
@@ -40,7 +37,7 @@ export const useAuth = create<AuthState>()(
           return { success: false, error: firstError };
         }
 
-        await new Promise((res) => setTimeout(res, 800));
+        await new Promise(res => setTimeout(res, 800));
 
         set({ user: { email, loginTime: Date.now() } });
         return { success: true };
@@ -56,10 +53,10 @@ export const useAuth = create<AuthState>()(
       },
     }),
     {
-      name: "auth-storage",
+      name: 'auth-storage',
 
       storage: {
-        getItem: (name) => {
+        getItem: name => {
           const stored = localStorage.getItem(name);
           return stored ? decrypt(stored, ENCRYPTION_KEY) : null;
         },
@@ -67,7 +64,7 @@ export const useAuth = create<AuthState>()(
           const encrypted = encrypt(value, ENCRYPTION_KEY);
           localStorage.setItem(name, encrypted);
         },
-        removeItem: (name) => localStorage.removeItem(name),
+        removeItem: name => localStorage.removeItem(name),
       },
     }
   )

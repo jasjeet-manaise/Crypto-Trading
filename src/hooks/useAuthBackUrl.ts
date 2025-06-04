@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/store/authStore";
+import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/store/authStore';
 
 export function useAuthBackUrl() {
   const { user } = useAuth();

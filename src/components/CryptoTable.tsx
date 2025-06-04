@@ -1,37 +1,25 @@
-import { useMemo, useState, KeyboardEvent } from "react";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
-import { useMarketAssets } from "@/hooks/useMarketAssets";
-import { Select } from "./ui/Select";
-import { Button } from "./ui/Button";
-import { SortDirection, SortField } from "@/enums";
+import { useMemo, useState, KeyboardEvent } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { SortDirection, SortField } from '@/enums';
+import { useMarketAssets } from '@/hooks/useMarketAssets';
+import { Button } from './ui/Button';
+import { Select } from './ui/Select';
 
-
-const SortArrow = ({
-  active,
-  direction,
-}: {
-  active: boolean;
-  direction: SortDirection;
-}) =>
-  active ? (
-    <span className="inline-block ml-1">{direction === "asc" ? "▲" : "▼"}</span>
-  ) : null;
+const SortArrow = ({ active, direction }: { active: boolean; direction: SortDirection }) =>
+  active ? <span className="ml-1 inline-block">{direction === 'asc' ? '▲' : '▼'}</span> : null;
 
 export default function CryptoTable() {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useMarketAssets();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useMarketAssets();
 
   const assets = data?.pages.flat() ?? [];
 
   const [sortField, setSortField] = useState<SortField>(SortField.Name);
-  const [sortDirection, setSortDirection] = useState<SortDirection>(
-    SortDirection.Asc
-  );
+  const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Asc);
 
   const onSort = (field: SortField) => {
     if (sortField === field) {
-      setSortDirection((prev) =>
+      setSortDirection(prev =>
         prev === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc
       );
     } else {
@@ -40,11 +28,8 @@ export default function CryptoTable() {
     }
   };
 
-  const handleKeyDown = (
-    e: KeyboardEvent<HTMLTableHeaderCellElement>,
-    field: SortField
-  ) => {
-    if (e.key === "Enter" || e.key === " ") {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTableHeaderCellElement>, field: SortField) => {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onSort(field);
     }
@@ -54,13 +39,9 @@ export default function CryptoTable() {
     const sortedAssets = [...assets];
     sortedAssets.sort((a, b) => {
       const aVal =
-        sortField === SortField.Price
-          ? Number(a[sortField])
-          : String(a[sortField]).toLowerCase();
+        sortField === SortField.Price ? Number(a[sortField]) : String(a[sortField]).toLowerCase();
       const bVal =
-        sortField === SortField.Price
-          ? Number(b[sortField])
-          : String(b[sortField]).toLowerCase();
+        sortField === SortField.Price ? Number(b[sortField]) : String(b[sortField]).toLowerCase();
 
       if (aVal < bVal) return sortDirection === SortDirection.Asc ? -1 : 1;
       if (aVal > bVal) return sortDirection === SortDirection.Asc ? 1 : -1;
@@ -70,53 +51,43 @@ export default function CryptoTable() {
   }, [assets, sortField, sortDirection]);
 
   return (
-    <div className="rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-      <table className="w-full table-auto text-sm text-left text-gray-800 dark:text-gray-100">
+    <div className="rounded-2xl border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900">
+      <table className="w-full table-auto text-left text-sm text-gray-800 dark:text-gray-100">
         <thead>
-          <tr className="sticky top-[68px] bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+          <tr className="sticky top-[68px] border-b border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
             <th
-              className="px-6 py-4 font-semibold tracking-wide uppercase text-xs cursor-pointer select-none"
+              className="cursor-pointer select-none px-6 py-4 text-xs font-semibold uppercase tracking-wide"
               onClick={() => onSort(SortField.Name)}
               role="button"
               aria-sort={
                 sortField === SortField.Name
                   ? sortDirection === SortDirection.Asc
-                    ? "ascending"
-                    : "descending"
-                  : "none"
+                    ? 'ascending'
+                    : 'descending'
+                  : 'none'
               }
               tabIndex={0}
-              onKeyDown={(e) => handleKeyDown(e, SortField.Name)}
-            >
+              onKeyDown={e => handleKeyDown(e, SortField.Name)}>
               Name
-              <SortArrow
-                active={sortField === SortField.Name}
-                direction={sortDirection}
-              />
+              <SortArrow active={sortField === SortField.Name} direction={sortDirection} />
             </th>
             <th
-              className="px-6 py-4 font-semibold tracking-wide uppercase text-xs cursor-pointer select-none"
+              className="cursor-pointer select-none px-6 py-4 text-xs font-semibold uppercase tracking-wide"
               onClick={() => onSort(SortField.Price)}
               role="button"
               aria-sort={
                 sortField === SortField.Price
                   ? sortDirection === SortDirection.Asc
-                    ? "ascending"
-                    : "descending"
-                  : "none"
+                    ? 'ascending'
+                    : 'descending'
+                  : 'none'
               }
               tabIndex={0}
-              onKeyDown={(e) => handleKeyDown(e, SortField.Price)}
-            >
+              onKeyDown={e => handleKeyDown(e, SortField.Price)}>
               Price (USD)
-              <SortArrow
-                active={sortField === SortField.Price}
-                direction={sortDirection}
-              />
+              <SortArrow active={sortField === SortField.Price} direction={sortDirection} />
             </th>
-            <th className="px-6 py-4 font-semibold tracking-wide uppercase text-xs">
-              Buy/Sell
-            </th>
+            <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide">Buy/Sell</th>
           </tr>
         </thead>
         <tbody>
@@ -139,27 +110,23 @@ export default function CryptoTable() {
             ))
           ) : sorted.length === 0 ? (
             <tr>
-              <td
-                colSpan={3}
-                className="px-6 py-10 text-center text-gray-500 dark:text-gray-400"
-              >
+              <td colSpan={3} className="px-6 py-10 text-center text-gray-500 dark:text-gray-400">
                 No data available.
               </td>
             </tr>
           ) : (
-            sorted.map((asset) => (
+            sorted.map(asset => (
               <tr
                 key={asset.id}
-                className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
-              >
+                className="group border-b border-gray-100 transition-colors hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <img
                       src={asset.image}
                       alt={`${asset.name} logo`}
-                      className="w-7 h-7 rounded-full border border-gray-300 dark:border-gray-700 shadow-sm"
+                      className="h-7 w-7 rounded-full border border-gray-300 shadow-sm dark:border-gray-700"
                     />
-                    <span className="font-medium text-sm">{asset.name}</span>
+                    <span className="text-sm font-medium">{asset.name}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
@@ -168,10 +135,7 @@ export default function CryptoTable() {
                 <td className="px-6 py-4">
                   <Select
                     defaultValue=""
-                    onChange={(e) =>
-                      alert(`You selected ${e.target.value} for ${asset.name}`)
-                    }
-                  >
+                    onChange={e => alert(`You selected ${e.target.value} for ${asset.name}`)}>
                     <option value="" disabled>
                       Buy/Sell
                     </option>
@@ -190,9 +154,8 @@ export default function CryptoTable() {
           <Button
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-lg transition"
-          >
-            {isFetchingNextPage ? "Loading..." : "Show More"}
+            className="rounded-lg bg-blue-600 px-6 py-2 font-medium text-white transition hover:bg-blue-700">
+            {isFetchingNextPage ? 'Loading...' : 'Show More'}
           </Button>
         </div>
       )}
