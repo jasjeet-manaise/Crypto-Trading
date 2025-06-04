@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { toast } from 'sonner';
 import { SwapMode } from '@/enums';
 import { MarketAsset } from '@/hooks/useMarketAssets';
 import { Button } from './ui/Button';
@@ -52,8 +53,17 @@ export default function TradePageContent(data: { pages: MarketAsset[] }) {
         <div className="flex items-center gap-2">
           <Input
             type="number"
+            min="0"
             value={cryptoInput}
-            onChange={e => setCryptoInput(e.target.value)}
+            onChange={e => {
+              const value = e.target.value;
+              const number = parseFloat(value);
+              if (value === '' || number >= 0) {
+                setCryptoInput(value);
+              } else {
+                toast.warning('Please enter a positive value.');
+              }
+            }}
             placeholder="Crypto Amount"
             className="flex-1"
           />
@@ -63,8 +73,17 @@ export default function TradePageContent(data: { pages: MarketAsset[] }) {
         <div className="relative w-full">
           <Input
             type="number"
+            min="0"
             value={fiatInput}
-            onChange={e => setFiatInput(e.target.value)}
+            onChange={e => {
+              const value = e.target.value;
+              const number = parseFloat(value);
+              if (value === '' || number >= 0) {
+                setFiatInput(value);
+              } else {
+                toast.warning('Please enter a positive value.');
+              }
+            }}
             placeholder="USD Amount"
             className="w-full pr-12"
           />
@@ -91,6 +110,7 @@ export default function TradePageContent(data: { pages: MarketAsset[] }) {
         <div className="flex items-center gap-2">
           <Input
             type="number"
+            min="0"
             value={cryptoInput}
             readOnly
             placeholder="Crypto Amount"
@@ -102,6 +122,7 @@ export default function TradePageContent(data: { pages: MarketAsset[] }) {
         <div className="relative w-full">
           <Input
             type="number"
+            min="0"
             value={fiatInput}
             readOnly
             placeholder="USD Amount"
