@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { toast, Toaster } from 'sonner';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useQueryErrorHandling } from './hooks/useQueryErrorHandling';
@@ -38,10 +38,10 @@ function App() {
 
   return (
     <QueryClientProvider client={client}>
-      <BrowserRouter basename="/Crypto-Trading">
+      <HashRouter>
         <AppRoutes />
         <Toaster richColors position="top-center" />
-      </BrowserRouter>
+      </HashRouter>
     </QueryClientProvider>
   );
 }
