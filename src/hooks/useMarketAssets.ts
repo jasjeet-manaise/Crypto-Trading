@@ -1,5 +1,5 @@
-import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios from 'axios';
+import { useQuery, useInfiniteQuery } from '@tanstack/react-query';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -14,12 +14,12 @@ export type MarketAsset = {
 export function useMarketAssets(options?: { getAll?: boolean }) {
   if (options?.getAll) {
     const query = useQuery({
-      queryKey: ["market-assets", "all"],
+      queryKey: ['market-assets', 'all'],
       queryFn: async () => {
         const response = await axios.get<MarketAsset[]>(API_URL, {
           params: {
-            vs_currency: "usd",
-            order: "market_cap_desc",
+            vs_currency: 'usd',
+            order: 'market_cap_desc',
             per_page: 100,
             page: 1,
           },
@@ -41,12 +41,12 @@ export function useMarketAssets(options?: { getAll?: boolean }) {
   }
 
   const query = useInfiniteQuery({
-    queryKey: ["market-assets"],
+    queryKey: ['market-assets'],
     queryFn: async ({ pageParam = 1 }) => {
       const response = await axios.get<MarketAsset[]>(API_URL, {
         params: {
-          vs_currency: "usd",
-          order: "market_cap_desc",
+          vs_currency: 'usd',
+          order: 'market_cap_desc',
           per_page: 10,
           page: pageParam,
         },

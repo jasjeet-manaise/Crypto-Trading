@@ -1,9 +1,9 @@
-import CryptoTable from "@/components/CryptoTable";
+import CryptoTable from '@/components/CryptoTable';
 
 export default function Home() {
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Crypto Assets</h1>
+      <h1 className="mb-4 text-2xl font-bold">Crypto Assets</h1>
       <CryptoTable />
     </div>
   );
