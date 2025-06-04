@@ -55,7 +55,7 @@ export default function CryptoTable({
         <thead>
           <tr className="sticky top-[68px] border-b border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
             <th
-              className="cursor-pointer select-none px-6 py-4 text-xs font-semibold uppercase tracking-wide"
+              className="cursor-pointer select-none rounded-tl-2xl px-6 py-4 text-xs font-semibold uppercase tracking-wide"
               onClick={() => onSort(SortField.Name)}
               role="button"
               aria-sort={
@@ -86,9 +86,12 @@ export default function CryptoTable({
               Price (USD)
               <SortArrow active={sortField === SortField.Price} direction={sortDirection} />
             </th>
-            <th className="px-6 py-4 text-xs font-semibold uppercase tracking-wide">Buy/Sell</th>
+            <th className="rounded-tr-2xl px-6 py-4 text-xs font-semibold uppercase tracking-wide">
+              Buy/Sell
+            </th>
           </tr>
         </thead>
+
         <tbody>
           {isLoading ? (
             Array.from({ length: 10 }).map((_, i) => (
