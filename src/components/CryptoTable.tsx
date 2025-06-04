@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { SortDirection, SortField } from '@/enums';
 import { Button } from './ui/Button';
-import { Select } from './ui/Select';
+import { Dropdown } from './ui/DropDownSelect';
 
 const SortArrow = ({ active, direction }: { active: boolean; direction: SortDirection }) =>
   active ? <span className="ml-1 inline-block">{direction === 'asc' ? '▲' : '▼'}</span> : null;
@@ -135,15 +135,7 @@ export default function CryptoTable({
                   ${asset.current_price.toLocaleString()}
                 </td>
                 <td className="px-6 py-4">
-                  <Select
-                    defaultValue=""
-                    onChange={e => alert(`You selected ${e.target.value} for ${asset.name}`)}>
-                    <option value="" disabled>
-                      Buy/Sell
-                    </option>
-                    <option value="buy">Buy</option>
-                    <option value="sell">Sell</option>
-                  </Select>
+                  <Dropdown onSelect={value => alert(`You selected ${value} for ${asset.name}`)} />
                 </td>
               </tr>
             ))
