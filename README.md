@@ -61,7 +61,7 @@ This app allows users to browse crypto assets, simulate trades between crypto an
 | **TypeScript**  | Type safety, better IDE support, reduces runtime errors                   | Requires learning curve, more verbose syntax                                  |
 | **Vite**        | Fast startup and HMR, optimized builds out of the box                     | Limited plugin ecosystem compared to Webpack                                  |
 | **Tailwind CSS**| Utility-first, responsive design quickly, easy to maintain                | Steeper learning curve for newcomers, verbose HTML                            |
-| **Zustand**     | Minimal API, easy to use, no boilerplate                                  | No built-in devtools/state persistence like Redux Toolkit                     |
+| **Zustand**     | Minimal API, easy to use, no boilerplate                                  | No built-in devtools like Redux Toolkit                     |
 | **React Query** | Handles caching, background sync, request deduplication                   | Can add complexity if not configured properly                                 |
 | **CoinGecko API** | Free, public, and extensive crypto data                                 | Rate limits, no authentication—risk of unavailability or misuse               |
 
