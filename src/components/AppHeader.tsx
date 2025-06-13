@@ -14,7 +14,7 @@ export default function AppHeader() {
   const { handleAuthBackUrlSet } = useAuthBackUrl();
   return (
     <>
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b bg-white px-6 py-4 shadow-sm">
+      <header className="sticky top-0 z-50 flex items-center justify-between border-b bg-white px-6 py-4 shadow-sm">
         <nav className="flex gap-6">
           <Link
             to="/"
