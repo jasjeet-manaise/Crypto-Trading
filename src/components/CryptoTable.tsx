@@ -53,7 +53,7 @@ export default function CryptoTable({
     <div className="rounded-2xl border border-gray-200 bg-white shadow-md dark:border-gray-700 dark:bg-gray-900">
       <table className="w-full table-auto text-left text-sm text-gray-800 dark:text-gray-100">
         <thead>
-          <tr className="sticky top-[68px] border-b border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+          <tr className="sticky top-[68px] z-20 border-b border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
             <th
               className="cursor-pointer select-none rounded-tl-2xl px-6 py-4 text-xs font-semibold uppercase tracking-wide"
               onClick={() => onSort(SortField.Name)}
